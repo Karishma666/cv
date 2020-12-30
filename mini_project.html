@@ -1,0 +1,1649 @@
+<?php
+session_start();
+require_once('database.php');
+require_once('library.php');
+$error = "";
+if(isset($_POST['txtusername'])){
+	$error = checkUser($_POST['txtusername'],$_POST['txtpassword'],$_POST['OfficeName']);
+}//if
+
+require_once('database.php');
+$sql = "SELECT DISTINCT(off_name)
+		FROM tbl_offices";
+$result = dbQuery($sql);
+
+?>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Courier Management System</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="css/mystyle.css" rel="stylesheet" type="text/css">
+<script language="javascript">
+<!--
+function memloginvalidate()
+{
+   if(document.form1.txtusername.value == "")
+     {
+        alert("Please enter admin UserName.");
+        document.form1.txtusername.focus();
+        return false;
+     }
+   if(document.form1.txtpassword.value == "")
+     {
+        alert("Please enter admin Password.");
+        document.form1.txtpassword.focus();
+        return false;
+     }
+   }
+
+//-->
+</script></head>
+
+
+<body onLoad="document.form1.txtusername.focus();">
+<table id="Outer" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" align="center" width="780">
+  <tbody><tr>
+    <td><table id="inner" border="0" cellpadding="3" cellspacing="3" height="500" align="center" width="96%">
+      <tbody><tr>
+        <td>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.style2 {color: #FFFFFF}
+-->
+</style>
+<table border="0" cellpadding="0" cellspacing="0" width="782">
+<tbody><tr>
+<td colspan="15"><img src="images/air-courier-express-services-500x500.jpg" height="109" width="780"></td>
+</tr>
+
+
+
+
+
+
+      <tr>
+        <td><div align="center">
+          <span class="redtext"><strong>          </strong></span><br>
+              <br>
+        </div>
+          <table border="0" cellpadding="0" cellspacing="0" align="center" width="300">
+            <tbody><tr>
+              <td width="18"><img src="images/boxtopleftcorner.gif" alt="" height="13" width="18"></td>
+              <td background="images/boxtopBG.gif" width="734"></td>
+              <td width="18"><img src="images/boxtoprightcorner.gif" alt="" height="13" width="18"></td>
+            </tr>
+            <tr>
+              <td background="images/boxleftBG.gif"></td>
+              <td><table border="0" cellpadding="0" cellspacing="0" align="center" width="98%">
+                  <tbody><tr>
+                    <td colspan="2" height="4"></td>
+                  </tr>
+                  <tr>
+                    <td height="18"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody><tr>
+                        <td colspan="3" class="smalltextgrey" width="378">
+						</td>
+                      </tr>
+                    </tbody></table></td>
+                  </tr>
+                  <tr>
+                    <td><table class="GreenBox" border="0" cellpadding="0" cellspacing="0" align="center" width="300">
+                      <tbody><tr>
+                        <form name="form1" id="form1" method="post" onSubmit="return memloginvalidate()">
+                          <td><table bgcolor="#FFFFFF" border="0" cellpadding="3" cellspacing="1" width="100%">
+                              <tbody><tr>
+                                <td colspan="3" class="smalltextgrey">&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" class="smalltextgrey">
+								<div class="headtext13" align="center"><strong>Administrator Login Area </strong></div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" height="10">
+								<font color="#FF0000" style="font-size:12px;">
+								<?php echo $error; ?>
+								</font>
+								</td>
+                                </tr>
+                              <tr>
+                                <td width="115">&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:12px;">Username</font></td>
+                                <td width="3">:</td>
+                                <td width="160">
+								<input name="txtusername" class="forminput" id="txtusername" maxlength="20" type="text"></td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:12px;">Password</font></td>
+                                <td>:</td>
+                                <td><input name="txtpassword" class="forminput" id="txtpassword" maxlength="20" type="password"></td>
+                              </tr>
+							  <tr>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;<font style="font-size:12px;">Office</font></td>
+                                <td>:</td>
+                                <td>
+								<select name="OfficeName">
+			<?php
+			while($data = dbFetchAssoc($result)){
+			?>
+			<option value="<?php echo $data['off_name']; ?>"><?php echo $data['off_name']; ?></option>
+			<?php
+			}//while
+			?>
+			</select>
+								</td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><input name="Submit" class="green-button" value="Login Now" type="submit" style="padding:5px 10px;font-weight:bold;"></td>
+                              </tr>
+                          </tbody>
+						  </table>
+						  </form>
+						  </td>
+
+                      </tr>
+                    </tbody></table></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+              </tbody></table></td>
+              <td background="images/boxrightBG.gif"></td>
+            </tr>
+            <tr>
+              <td width="18"><img src="images/boxbtmleftcorner.gif" alt="" height="12" width="18"></td>
+              <td background="images/boxbtmBG.gif" width="734"></td>
+              <td width="18"><img src="images/boxbtmrightcorner.gif" alt="" height="12" width="18"></td>
+            </tr>
+          </tbody></table>
+          <br>
+          <br></td>
+      </tr>
+      <tr>
+        <td><table border="0" cellpadding="0" cellspacing="0" align="center" width="780">
+  <tbody><tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304"><div align="right"></div></td>
+  </tr>
+</tbody></table>
+</td>
+      </tr>
+
+    </tbody></table></td>
+  </tr>
+</tbody></table>
+</td></tr></tbody></table>
+<a href="change_password.html">Change Password</a>
+</body></html>
+
+
+<?php
+}//else
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Online Courier Software Script, Cargo Tracking Module in PHP, MySql in India</title>
+<meta name="description" content="A Simple Solution to enable Tracking in your Existing Website.">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/aalpha.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+<!--
+.style1 {color: #CCCCCC}
+-->
+</style>
+</head>
+
+<body>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900" style="padding-top:20px;">
+  <tbody><tr>
+    <td width="900"><img src="images/trheader.jpg" ></td>
+  </tr>
+  <tr>
+    <td><table border="0" cellpadding="0" cellspacing="0" width="900">
+      <tbody><tr>
+        <td bgcolor="#FFCC00">&nbsp;</td>
+      </tr>
+    </tbody></table></td>
+  </tr>
+</tbody></table>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td bgcolor="#FFFFFF" width="900"><table border="0" align="center" width="99%">
+      <tbody><tr>
+        <td width="22%"><table border="0" align="center" width="185">
+          <tbody><tr bgcolor="#EFF7FC">
+            <td class="aalpha" bgcolor="#0066CC" height="19" width="179"><img src="home_files/navig.gif" height="24" width="113"></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha" height="19"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Features</strong></td>
+          </tr>
+          <tr>
+            <td class="aalpha"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Demo</strong></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Purchase </strong></td>
+          </tr>
+          <tr>
+            <td class="aalpha"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Screenshots</strong></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Platform Requirements </strong></td>
+          </tr>
+          <tr>
+            <td class="aalpha"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> License Agreement </strong></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> FAQ</strong></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha" bgcolor="#FFFFFF"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Testimonials</strong></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha" bgcolor="#FFFFFF"><strong><img src="home_files/arrow_right.gif" height="9" width="9"> Contact</strong></td>
+          </tr>
+        </tbody></table>
+              <p align="center"><img src="home_files/mysql.gif" height="31" width="89"></p>
+          <p align="center"><img src="home_files/php_logo.png" height="54" width="102"></p><!-- #EndLibraryItem --></td>
+        <td height="221" width="1%"><img src="home_files/l1.gif" height="292" width="1"></td>
+        <td class="aalpha" width="54%"><p class="navi" align="justify"><strong>Courier Management System  </strong> is the simplest solution for <strong>Courier &amp; Cargo Tracking</strong> Business. If you need to enable Tracking Option in your existing or new website, this is quickest Software Solution. </p>
+          <p class="navi" align="justify">You can get install it yourselves or  We do the installation and brand it in your name on your hosting ! </p>
+          <p class="navi" align="justify">The Courier Software is Very
+easy to setup and manage powerful administration. Provide online
+tracking system of consignment and shipping detail for International or
+domestic shipping. </p>
+          <p class="navi" align="justify">We have made this script, a very simple one, which means SIMPLE  ! Read More on the Features<strong>.</strong></p>
+          <p class="navi" align="justify"><strong>Our CEO quotes : </strong></p>
+          <p class="navi" align="justify">" We decided to develop this
+small application for the simple reason being, not many such scripts are
+ available in the market and few of such that exist are vast and
+complex" </p></td>
+        <td class="aalpha" width="2%"><div align="center"><img src="home_files/l2.gif" height="292" width="1"></div></td>
+        <td class="aalpha" width="21%"><table border="0" align="center" width="89%">
+          <tbody><tr bgcolor="#EFF7FC">
+            <td class="aalpha" bgcolor="#008C00" height="19"><img src="home_files/whoca.gif" height="24" width="140"></td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha" height="19"><img src="home_files/arrow_right.gif" height="9" width="9"> Courier Company </td>
+          </tr>
+          <tr>
+            <td class="aalpha"><img src="home_files/arrow_right.gif" height="9" width="9"> Cargo Company </td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha"><img src="home_files/arrow_right.gif" height="9" width="9"> Any Logistics </td>
+          </tr>
+          <tr>
+            <td class="aalpha"><img src="home_files/arrow_right.gif" height="9" width="9"> Shipping Company </td>
+          </tr>
+          <tr bgcolor="#EFF7FC">
+            <td class="aalpha"><img src="home_files/arrow_right.gif" height="9" width="9"> Freight Company </td>
+          </tr>
+        </tbody></table>
+              <br>
+              <table border="0" align="center" width="90%">
+                <tbody><tr bgcolor="#EFF7FC">
+                  <td class="aalpha" bgcolor="#EFF7FC" height="19"><div align="center">
+                      <p><strong> Status Check </strong>:</p>
+                  </div></td>
+                </tr>
+                <tr bgcolor="#EFF7FC">
+                  <td class="aalpha" bgcolor="#FFFFFF" height="19"><div align="center"><a href="track-status.php" target="_self">Click Here </a> </div></td>
+                </tr>
+                <tr bgcolor="#EFF7FC">
+                  <td class="aalpha" bgcolor="#EFF7FC" height="19"><div align="center">
+                      <p><strong> ADMIN Login </strong>:</p>
+                  </div></td>
+                </tr>
+                <tr bgcolor="#EFF7FC">
+                  <td class="aalpha" bgcolor="#FFFFFF" height="19"><div align="center"><a href="login.php" target="_self">Click here </a> </div></td>
+                </tr>
+              </tbody></table>
+              <br></td>
+      </tr>
+    </tbody></table>
+        <table border="0" align="center" width="100%">
+          <tbody><tr bgcolor="#EFF7FC">
+            <td class="aalpha" bgcolor="#FFFFFF" height="19"><div class="lowerstyle style1" align="center"></div></td>
+          </tr>
+      </tbody></table></td>
+  </tr>
+</tbody></table>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td colspan="2" class="aalpha" bgcolor="#FFCC00" height="25"><div align="center">
+	</div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304"><p class="lowerstyle">
+
+    </p>
+      <p class="lowerstyle">&nbsp;</p></td>
+  </tr>
+</tbody></table>
+
+</body></html>
+
+
+
+<?php
+//session_start();
+?>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody>
+  <tr>
+    <td>
+<style type="text/css">
+<!--
+.style2 {color: #FFFFFF}
+-->
+</style>
+
+<table border="0" cellpadding="0" cellspacing="0" width="900">
+<tbody><tr>
+<td colspan="15">
+<img src="images/trheader.jpg" height="109" width="900"></td>
+</tr>
+<tr bgcolor="#2284d5">
+<td height="30" width="110"><div align="center"><span class="headtext13 style2"><strong>SHIPMENT:</strong></span></div></td>
+<td height="30" width="83"><div class="lowerstyle" align="center"> <a href="add-courier.php">Add</a></div></td>
+<td width="4"><div align="left">|</div></td>
+<td height="30" width="74"> <div class="lowerstyle" align="center"><a href="courier-list.php">Update  </a></div></td>
+<td width="4"><div align="left">|</div></td>
+<td width="89"><div class="lowerstyle" align="center">
+  <div align="center"><a href="search-edit.php">Search &amp; Edit </a></div>
+</div></td>
+<td width="3"><div align="left">|</div></td>
+<td height="30" width="96"><div align="center"><span class="headtext13 style2"><strong>REPORTS</strong></span><span class="heading"><strong> : </strong></span></div></td>
+<td height="30" width="83"><div class="lowerstyle" align="center"><a href="delivered-list.php">Delivered </a> </div></td>
+<td width="3">|</td>
+<td width="76"><div class="lowerstyle" align="center"><a href="datewise-list.php">Datewise </a> </div></td>
+<td width="3">&nbsp;</td>
+<td width="71"><div class="lowerstyle" align="center"><a href="http://tracking4web.com/admin/report_statuswise.php?status=all"></a> </div></td>
+<td width="3"></td>
+<td height="30" width="80">
+
+</td>
+</tr>
+
+</tbody></table>
+
+<?php
+if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin-role') {
+?>
+<table border="0" cellpadding="0" cellspacing="0" width="900">
+  <tbody><tr style="height:25px;">
+    <td bgcolor="#E2E2E2" width="4">&nbsp;</td>
+    <td bgcolor="#E2E2E2" width="240">&nbsp;<b>Admin Menu</b></td>
+    <td bgcolor="#E2E2E2" width="130"><div align="center"><a href="offices-list.php" class="headtext13">Office Details</a></div></td>
+    <td bgcolor="#E2E2E2" width="10">|</td>
+
+    <td bgcolor="#E2E2E2" width="100"><div align="center"><a href="add-office.php" class="headtext13">Add New Office</a></div></td>
+    <td bgcolor="#E2E2E2" width="10">|</td>
+	<td bgcolor="#E2E2E2" width="162"><div align="center"><a href="manager-list.php" class="headtext13">Manager Details</a> </div></td>
+    <td bgcolor="#E2E2E2" width="7">|</td>
+    <td bgcolor="#E2E2E2" width="125"><div align="center"><a href="add-new-officer.php" class="headtext13">Add New Manager</a></div></td>
+  </tr>
+</tbody>
+</table>
+<?php
+}
+?>
+<table border="0" cellpadding="0" cellspacing="0" width="900">
+  <tbody><tr style="height:25px;">
+    <td bgcolor="#99CCFF" width="4">&nbsp;</td>
+    <td bgcolor="#99CCFF" width="350">&nbsp;</td>
+    <td bgcolor="#99CCFF" width="130"><div align="center"><a href="admin.php" class="headtext13"></a></div></td>
+    <td bgcolor="#99CCFF" width="10"></td>
+    <td bgcolor="#99CCFF" width="162"><div align="center"><a href="admin.php" class="headtext13">Home</a> </div></td>
+    <td bgcolor="#99CCFF" width="7">|</td>
+    <td bgcolor="#99CCFF" width="125"><div align="center"><a href="process.php?action=logOut" class="headtext13">Logout</a></div></td>
+  </tr>
+</tbody>
+</table>
+<?php
+session_start();
+require_once('library.php');
+$rand = get_rand_id(8);
+echo $rand;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Admin</title>
+<link href="css/mystyle.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+
+.ds_box {
+	background-color: #FFF;
+	border: 1px solid #000;
+	position: absolute;
+	z-index: 32767;
+}
+
+.ds_tbl {
+	background-color: #FFF;
+}
+
+.ds_head {
+	background-color: #333;
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	letter-spacing: 2px;
+}
+
+.ds_subhead {
+	background-color: #CCC;
+	color: #000;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 32px;
+}
+
+.ds_cell {
+	background-color: #EEE;
+	color: #000;
+	font-size: 13px;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.ds_cell:hover {
+	background-color: #F3F3F3;
+} /* This hover code won't work for IE */
+
+</style>
+<link type="text/css" rel="stylesheet" href="css/style.htm">
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+-->
+</style>
+
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 15px;
+	font-weight: bold;
+	color: #003399;
+}
+-->
+</style>
+<script type="text/JavaScript">
+<!--
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_validateForm() { //v4.0
+  var i,p,q,nm,test,num,min,max,errors='',args=MM_validateForm.arguments;
+  for (i=0; i<(args.length-2); i+=3) { test=args[i+2]; val=MM_findObj(args[i]);
+    if (val) { nm=val.name; if ((val=val.value)!="") {
+      if (test.indexOf('isEmail')!=-1) { p=val.indexOf('@');
+        if (p<1 || p==(val.length-1)) errors+='- '+nm+' must contain an e-mail address.\n';
+      } else if (test!='R') { num = parseFloat(val);
+        if (isNaN(val)) errors+='- '+nm+' must contain a number.\n';
+        if (test.indexOf('inRange') != -1) { p=test.indexOf(':');
+          min=test.substring(8,p); max=test.substring(p+1);
+          if (num<min || max<num) errors+='- '+nm+' must contain a number between '+min+' and '+max+'.\n';
+    } } } else if (test.charAt(0) == 'R') errors += '- '+nm+' is required.\n'; }
+  } if (errors) alert('The following error(s) occurred:\n'+errors);
+  document.MM_returnValue = (errors == '');
+}
+//-->
+</script>
+</head>
+
+<body>
+
+	<?php
+session_start();
+require_once('database.php');
+require_once('library.php');
+
+isUser();
+
+$sql = "SELECT *
+		FROM tbl_courier_officers";
+$result = dbQuery($sql);
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Admin</title>
+<link href="css/mystyle.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.style2 {color: #FFFFFF}
+-->
+</style>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td width="900">
+
+<?php include("header.php"); ?>
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#FFFFFF">
+	<script language="JavaScript">
+var checkflag = "false";
+
+function check(field) {
+if (checkflag == "false")
+ {
+	for (i = 0; i < field.length; i++) {
+	if(field[i].type=="checkbox" && field[i].name!="chkAll")
+	{
+	field[i].checked=true;
+	}
+	}
+	checkflag = "true";
+}
+else
+{
+	for (i = 0; i < field.length; i++) {
+	if(field[i].type=="checkbox" && field[i].name!="chkAll")
+	{
+	field[i].checked=false;
+	}
+	}
+	checkflag = "false";
+}
+
+}
+function confirmDel(field,msg)
+{
+	count=0;
+	for (i = 0; i < field.length; i++) {
+	if(field[i].type=="checkbox" && field[i].name!="chkAll" && field[i].checked==true)
+	{
+	count++;
+	}
+	}
+
+	if(count == 0)
+	{
+		alert("Select any one record to delete!");
+		return false;
+	}
+	else
+	{
+		return confirm(msg);
+	}
+}
+</script>
+<table border="0" align="center" width="80%">
+    <tbody><tr>
+      <td class="LargeBlue" bgcolor="#FFFFFF" align="left">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="LargeBlue" bgcolor="#FFFFFF" align="left"><div class="Partext1" align="center"><strong>View All Manager Details </strong></div></td>
+    </tr>
+  </tbody></table>
+
+
+  <table border="0" cellpadding="1" cellspacing="1" align="center" width="95%">
+    <tbody>
+	<tr>
+    <td>
+	</td>
+    </tr>
+  </tbody></table>
+  <table class="blackbox" border="0" cellpadding="1" cellspacing="1" align="center" width="95%">
+    <tbody><tr class="BoldRED" bgcolor="#FFFFFF" style="height:20px;">
+      <td class="newtext" bgcolor="#EDEDED" width="20%">Officer Name </td>
+      <td class="newtext" bgcolor="#EDEDED" width="20%">Address</td>
+	  <td class="newtext" bgcolor="#EDEDED" width="20%">Email</td>
+      <td class="newtext" bgcolor="#EDEDED" width="15%">Phone Numner</td>
+      <td class="newtext" bgcolor="#EDEDED" width="25%">Office Name </td>
+
+    </tr>
+	<?php
+
+	while($data = dbFetchAssoc($result)){
+	extract($data);
+	?>
+      <tr onMouseOver="this.bgColor='gold';" onMouseOut="this.bgColor='#FFFFFF';" bgcolor="#FFFFFF" style="height:20px;">
+
+      <td class="gentxt"><?php echo $officer_name; ?></td>
+      <td class="gentxt"><?php echo $address; ?></td>
+      <td class="gentxt"><?php echo $email; ?></td>
+      <td class="gentxt"><?php echo $ph_no; ?></td>
+      <td class="gentxt"><?php echo $office; ?></td>
+
+    </tr>
+    <?php
+	}//while
+	?>
+	  </tbody></table>
+  <br>
+
+    </td>
+  </tr>
+  <tr>
+    <td><table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304"><div align="right"></div></td>
+  </tr>
+</tbody></table>
+</td>
+  </tr>
+</tbody></table>
+
+
+</body></html>
+<?php include("header.php"); ?>
+
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#FFFFFF">
+
+
+<table class="ds_box" id="ds_conclass" style="display: none;" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td id="ds_calclass"> </td>
+  </tr>
+</tbody></table>
+<script type="text/javascript">
+// <!-- <![CDATA[
+
+// Project: Dynamic Date Selector (DtTvB) - 2006-03-16
+// Script featured on JavaScript Kit- http://www.javascriptkit.com
+// Code begin...
+// Set the initial date.
+var ds_i_date = new Date();
+ds_c_month = ds_i_date.getMonth() + 1;
+ds_c_year = ds_i_date.getFullYear();
+
+// Get Element By Id
+function ds_getel(id) {
+	return document.getElementById(id);
+}
+
+// Get the left and the top of the element.
+function ds_getleft(el) {
+	var tmp = el.offsetLeft;
+	el = el.offsetParent
+	while(el) {
+		tmp += el.offsetLeft;
+		el = el.offsetParent;
+	}
+	return tmp;
+}
+function ds_gettop(el) {
+	var tmp = el.offsetTop;
+	el = el.offsetParent
+	while(el) {
+		tmp += el.offsetTop;
+		el = el.offsetParent;
+	}
+	return tmp;
+}
+
+// Output Element
+var ds_oe = ds_getel('ds_calclass');
+// Container
+var ds_ce = ds_getel('ds_conclass');
+
+// Output Buffering
+var ds_ob = '';
+function ds_ob_clean() {
+	ds_ob = '';
+}
+function ds_ob_flush() {
+	ds_oe.innerHTML = ds_ob;
+	ds_ob_clean();
+}
+function ds_echo(t) {
+	ds_ob += t;
+}
+
+var ds_element; // Text Element...
+
+var ds_monthnames = [
+'January', 'February', 'March', 'April', 'May', 'June',
+'July', 'August', 'September', 'October', 'November', 'December'
+]; // You can translate it for your language.
+
+var ds_daynames = [
+'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+]; // You can translate it for your language.
+
+// Calendar template
+function ds_template_main_above(t) {
+	return '<table cellpadding="3" cellspacing="1" class="ds_tbl">'
+	     + '<tr>'
+		 + '<td class="ds_head" style="cursor: pointer" onclick="ds_py();">&lt;&lt;</td>'
+		 + '<td class="ds_head" style="cursor: pointer" onclick="ds_pm();">&lt;</td>'
+		 + '<td class="ds_head" style="cursor: pointer" onclick="ds_hi();" colspan="3">[Close]</td>'
+		 + '<td class="ds_head" style="cursor: pointer" onclick="ds_nm();">&gt;</td>'
+		 + '<td class="ds_head" style="cursor: pointer" onclick="ds_ny();">&gt;&gt;</td>'
+		 + '</tr>'
+	     + '<tr>'
+		 + '<td colspan="7" class="ds_head">' + t + '</td>'
+		 + '</tr>'
+		 + '<tr>';
+}
+
+function ds_template_day_row(t) {
+	return '<td class="ds_subhead">' + t + '</td>';
+	// Define width in CSS, XHTML 1.0 Strict doesn't have width property for it.
+}
+
+function ds_template_new_week() {
+	return '</tr><tr>';
+}
+
+function ds_template_blank_cell(colspan) {
+	return '<td colspan="' + colspan + '"></td>'
+}
+
+function ds_template_day(d, m, y) {
+	return '<td class="ds_cell" onclick="ds_onclick(' + d + ',' + m + ',' + y + ')">' + d + '</td>';
+	// Define width the day row.
+}
+
+function ds_template_main_below() {
+	return '</tr>'
+	     + '</table>';
+}
+
+// This one draws calendar...
+function ds_draw_calendar(m, y) {
+	// First clean the output buffer.
+	ds_ob_clean();
+	// Here we go, do the header
+	ds_echo (ds_template_main_above(ds_monthnames[m - 1] + ' ' + y));
+	for (i = 0; i < 7; i ++) {
+		ds_echo (ds_template_day_row(ds_daynames[i]));
+	}
+	// Make a date object.
+	var ds_dc_date = new Date();
+	ds_dc_date.setMonth(m - 1);
+	ds_dc_date.setFullYear(y);
+	ds_dc_date.setDate(1);
+	if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+		days = 31;
+	} else if (m == 4 || m == 6 || m == 9 || m == 11) {
+		days = 30;
+	} else {
+		days = (y % 4 == 0) ? 29 : 28;
+	}
+	var first_day = ds_dc_date.getDay();
+	var first_loop = 1;
+	// Start the first week
+	ds_echo (ds_template_new_week());
+	// If sunday is not the first day of the month, make a blank cell...
+	if (first_day != 0) {
+		ds_echo (ds_template_blank_cell(first_day));
+	}
+	var j = first_day;
+	for (i = 0; i < days; i ++) {
+		// Today is sunday, make a new week.
+		// If this sunday is the first day of the month,
+		// we've made a new row for you already.
+		if (j == 0 && !first_loop) {
+			// New week!!
+			ds_echo (ds_template_new_week());
+		}
+		// Make a row of that day!
+		ds_echo (ds_template_day(i + 1, m, y));
+		// This is not first loop anymore...
+		first_loop = 0;
+		// What is the next day?
+		j ++;
+		j %= 7;
+
+	}
+	// Do the footer
+	ds_echo (ds_template_main_below());
+	// And let's display..
+	ds_ob_flush();
+	// Scroll it into view.
+	ds_ce.scrollIntoView();
+}
+
+// A function to show the calendar.
+// When user click on the date, it will set the content of t.
+function ds_sh(t) {
+	// Set the element to set...
+	ds_element = t;
+	// Make a new date, and set the current month and year.
+	var ds_sh_date = new Date();
+	ds_c_month = ds_sh_date.getMonth() + 1;
+	ds_c_year = ds_sh_date.getFullYear();
+	// Draw the calendar
+	ds_draw_calendar(ds_c_month, ds_c_year);
+	// To change the position properly, we must show it first.
+	ds_ce.style.display = '';
+	// Move the calendar container!
+	the_left = ds_getleft(t);
+	the_top = ds_gettop(t) + t.offsetHeight;
+	ds_ce.style.left = the_left + 'px';
+	ds_ce.style.top = the_top + 'px';
+	// Scroll it into view.
+	ds_ce.scrollIntoView();
+}
+
+// Hide the calendar.
+function ds_hi() {
+	ds_ce.style.display = 'none';
+}
+
+// Moves to the next month...
+function ds_nm() {
+	// Increase the current month.
+	ds_c_month ++;
+	// We have passed December, let's go to the next year.
+	// Increase the current year, and set the current month to January.
+	if (ds_c_month > 12) {
+		ds_c_month = 1;
+		ds_c_year++;
+	}
+	// Redraw the calendar.
+	ds_draw_calendar(ds_c_month, ds_c_year);
+}
+
+// Moves to the previous month...
+function ds_pm() {
+	ds_c_month = ds_c_month - 1; // Can't use dash-dash here, it will make the page invalid.
+	// We have passed January, let's go back to the previous year.
+	// Decrease the current year, and set the current month to December.
+	if (ds_c_month < 1) {
+		ds_c_month = 12;
+		ds_c_year = ds_c_year - 1; // Can't use dash-dash here, it will make the page invalid.
+	}
+	// Redraw the calendar.
+	ds_draw_calendar(ds_c_month, ds_c_year);
+}
+
+// Moves to the next year...
+function ds_ny() {
+	// Increase the current year.
+	ds_c_year++;
+	// Redraw the calendar.
+	ds_draw_calendar(ds_c_month, ds_c_year);
+}
+
+// Moves to the previous year...
+function ds_py() {
+	// Decrease the current year.
+	ds_c_year = ds_c_year - 1; // Can't use dash-dash here, it will make the page invalid.
+	// Redraw the calendar.
+	ds_draw_calendar(ds_c_month, ds_c_year);
+}
+
+// Format the date to output.
+function ds_format_date(d, m, y) {
+	// 2 digits month.
+	m2 = '00' + m;
+	m2 = m2.substr(m2.length - 2);
+	// 2 digits day.
+	d2 = '00' + d;
+	d2 = d2.substr(d2.length - 2);
+	// YYYY-MM-DD
+	return d2 + '/' + m2 + '/'+ y;
+}
+
+// When the user clicks the day.
+function ds_onclick(d, m, y) {
+	// Hide the calendar.
+	ds_hi();
+	// Set the value of it, if we can.
+	if (typeof(ds_element.value) != 'undefined') {
+		ds_element.value = ds_format_date(d, m, y);
+	// Maybe we want to set the HTML in it.
+	} else if (typeof(ds_element.innerHTML) != 'undefined') {
+		ds_element.innerHTML = ds_format_date(d, m, y);
+	// I don't know how should we display it, just alert it to user.
+	} else {
+		alert (ds_format_date(d, m, y));
+	}
+}
+
+function getSelected(opt)
+ {
+
+ 	var opt=document.frmExport.opt;
+            for (var intLoop = 0; intLoop < opt.length; intLoop++)
+			 {
+			  if (!(opt.options[intLoop].selected))
+			   {
+			   		alert("Select any one field!");
+					return false;
+               }
+		    }
+			return true;
+  }
+
+// And here is the end.
+
+// ]]> -->
+</script>
+ <br/>
+  <table border="0" align="center" width="100%">
+    <tbody>
+	<tr>
+      <td class="Partext1" bgcolor="F9F5F5" align="center"><span class="headtext13">Add New Office Manager </span></td>
+    </tr>
+
+  </tbody>
+  </table>
+<form action="process.php?action=add-office" method="post" name="frmShipment" >
+<div class="gentxt" align="right">
+<table border="0" cellpadding="1" cellspacing="1" align="center" width="83%">
+<tbody><tr>
+<td width="60%">&nbsp;</td>
+<td width="40%"><div align="right"></div></td>
+</tr>
+</tbody></table>
+</div>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="75%">
+  <tbody><tr>
+    <td width="18"><img src="images/boxtopleftcorner.gif" alt="" height="13" width="18"></td>
+    <td background="images/boxtopBG.gif" width="734"></td>
+    <td width="18"><img src="images/boxtoprightcorner.gif" alt="" height="13" width="18"></td>
+  </tr>
+  <tr>
+    <td background="images/boxleftBG.gif"></td>
+    <td><table border="0" cellpadding="0" cellspacing="0" align="center" width="98%">
+      <tbody><tr>
+        <td colspan="2" height="4"></td>
+      </tr>
+      <tr>
+        <td height="18">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><table class="Partext1" cellpadding="2" cellspacing="2" align="center" width="100%">
+          <tbody><tr>
+            <td colspan="3" class="TrackMediumBlue" align="right"><div class="gentxt" align="right">
+                <div class="headtext13" align="left"><strong>New Office   Information : </strong></div>
+            </div></td>
+          </tr>
+          <tr>
+            <td class="TrackMediumBlue" align="right" width="138">Office  Name   :</td>
+            <td width="13">&nbsp;</td>
+            <td width="477">
+			<input name="OfficeName" type="TEXT" id="OfficeName" size="40"  maxlength="100">                </td>
+          </tr>
+          <tr>
+            <td class="TrackMediumBlue" align="right">Address   :</td>
+            <td>&nbsp;</td>
+            <td><span class="REDLink">
+              <textarea name="OfficeAddress" cols="27" rows="2" id="OfficeAddress"></textarea>
+              *</span></td>
+          </tr>
+          <tr>
+            <td class="TrackMediumBlue" align="right">City  :</td>
+            <td>&nbsp;</td>
+            <td><input name="City" id="City" maxlength="13" size="40" type="TEXT"></td>
+          </tr>
+          <tr>
+            <td class="TrackMediumBlue" align="right">Phone No. : </td>
+            <td>&nbsp;</td>
+            <td><input name="PhoneNo" id="PhoneNo" maxlength="13" size="40" type="TEXT"></td>
+          </tr>
+          <tr>
+            <td class="TrackMediumBlue" align="right">Office Timing : </td>
+            <td>&nbsp;</td>
+            <td><input name="OfficeTiming" id="OfficeTiming" maxlength="30" size="40" type="TEXT"></td>
+          </tr>
+
+          <tr>
+            <td class="TrackMediumBlue" align="right">Contact Person : </td>
+            <td>&nbsp;</td>
+            <td><input name="ContactPerson" id="ContactPerson" maxlength="50" size="40" type="TEXT"></td>
+          </tr>
+          <tr>
+            <td class="TrackMediumBlue" align="right">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td align="right">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td><input name="Submit" type="submit" onClick="MM_validateForm('OfficeName','','R','City','','R','PhoneNo','','R','OfficeTiming','','R','ContactPerson','','R','OfficeAddress','','R');return document.MM_returnValue" value="Add New Office "></td>
+          </tr>
+        </tbody></table></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </tbody></table></td>
+    <td background="images/boxrightBG.gif"></td>
+  </tr>
+  <tr>
+    <td width="18"><img src="images/boxbtmleftcorner.gif" alt="" height="12" width="18"></td>
+    <td background="images/boxbtmBG.gif" width="734"></td>
+    <td width="18"><img src="images/boxbtmrightcorner.gif" alt="" height="12" width="18"></td>
+  </tr>
+</tbody></table>
+<br>
+</form>
+
+	</td>
+  </tr>
+  <tr>
+    <td>
+	<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304"><div align="right"></div></td>
+  </tr>
+</tbody></table>
+</td>
+  </tr>
+</tbody></table>
+
+
+<?php
+session_start();
+require_once('library.php');
+isUser();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Courier / Cargo Tracking Script in PHP - Ver 0.97</title>
+<link href="css/mystyle.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<?php
+include("header.php");
+?>
+
+	</td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#FFFFFF"><div align="center"> <br>
+        <br>
+        <table bgcolor="#ECECEC" border="0" cellpadding="2" cellspacing="2" align="center" width="50%">
+        <tbody><tr>
+          <td class="Partext1" bgcolor="#EEEEEE"><div align="left"><strong>Courier Management System </strong></div></td>
+        </tr>
+        <tr>
+          <td class="newtext" bgcolor="#FFFFFF"><div align="left"><img src="images/arrow_white.gif" border="0" height="8" width="7">&nbsp;<a href="add-courier.php" class="REDLink">Add Shipment</a></div></td>
+        </tr>
+                <tr>
+          <td class="newtext" bgcolor="#FFFFFF"><div align="left"><img src="images/arrow_white.gif" border="0" height="8" width="7">&nbsp;<a href="courier-list.php" class="REDLink">List Shipment</a></div></td>
+        </tr>
+        <tr>
+          <td class="newtext" bgcolor="#FFFFFF"><div align="left"><img src="images/arrow_white.gif" border="0" height="8" width="7">&nbsp;<a href="report.php" class="REDLink">Report</a></div></td>
+        </tr>
+        <tr>
+          <td class="newtext" bgcolor="#FFFFFF"><div align="left"><img src="images/arrow_white.gif" border="0" height="8" width="7">&nbsp;<a href="process.php?action=logOut" class="REDLink">Logout</a></div></td>
+        </tr>
+      </tbody></table>
+            <br>
+          <br>
+          <br>
+          <br>
+    </div></td>
+  </tr>
+  <tr>
+    <td>
+	<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304">
+	</td>
+  </tr>
+</tbody></table>
+</td>
+  </tr>
+</tbody></table>
+
+
+</body></html>
+<?php
+session_start();
+require_once('database.php');
+require_once('library.php');
+
+isUser();
+
+$cons= $_POST['Consignment'];
+
+$sql = "SELECT *
+		FROM tbl_courier
+		WHERE cons_no = '$cons'";
+$result = dbQuery($sql);
+$no = dbNumRows($result);
+if($no == 1){
+while($data = dbFetchAssoc($result)) {
+extract($data);
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Admin</title>
+<link href="css/mystyle.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.style1 {color: #FF0000}
+.style3 {font-family: verdana, tohama, arial}
+</style>
+</head>
+
+<body>
+
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+
+  <tbody><tr>
+
+    <td width="900">
+<?php include("header.php"); ?>
+
+	</td>
+
+  </tr>
+
+
+
+  <tr>
+
+    <td bgcolor="#FFFFFF">
+
+<style type="text/css">
+.ds_box {
+	background-color: #FFF;
+	border: 1px solid #000;
+	position: absolute;
+	z-index: 32767;
+}
+.ds_tbl {
+	background-color: #FFF;
+}
+.ds_head {
+	background-color: #333;
+
+	color: #FFF;
+
+	font-family: Arial, Helvetica, sans-serif;
+
+	font-size: 13px;
+
+	font-weight: bold;
+
+	text-align: center;
+
+	letter-spacing: 2px;
+
+}
+.ds_subhead {
+	background-color: #CCC;
+	color: #000;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 32px;
+}
+.ds_cell {
+	background-color: #EEE;
+	color: #000;
+	font-size: 13px;
+
+	text-align: center;
+
+	font-family: Arial, Helvetica, sans-serif;
+
+	padding: 5px;
+
+	cursor: pointer;
+
+}
+.ds_cell:hover {
+	background-color: #F3F3F3;
+} /* This hover code won't work for IE */
+</style>
+<style type="text/css">
+
+<!--
+
+body {
+
+	margin-left: 0px;
+
+	margin-top: 0px;
+
+	margin-right: 0px;
+
+	margin-bottom: 0px;
+
+}
+
+-->
+
+</style>
+
+
+
+
+
+<table class="ds_box" id="ds_conclass" style="display: none;" cellpadding="0" cellspacing="0">
+
+  <tbody><tr>
+
+    <td id="ds_calclass"> </td>
+
+  </tr>
+
+</tbody></table>
+
+
+
+  <br>
+
+  <table border="0" align="center" width="98%">
+
+    <tbody><tr>
+
+      <td class="Partext1" bgcolor="F9F5F5" align="center"><strong>Edit Shipment </strong></td>
+
+    </tr>
+
+  </tbody></table>
+
+
+
+  <br>
+
+  <table bgcolor="#EEEEEE" cellpadding="2" cellspacing="2" align="center" width="75%">
+
+
+
+    <tbody><tr>
+
+      <td class="Partext1" bgcolor="#FFFFFF" align="right"><div align="center">
+
+        <table border="0" cellpadding="1" cellspacing="1" width="80%">
+
+          <tbody><tr>
+
+            <td width="55%"><div align="left" class="style3">Shipper Name : </div></td>
+
+            <td width="45%"><div align="left" class="style3">
+
+              <?php echo $ship_name; ?>
+            </div></td>
+
+          </tr>
+
+          <tr>
+
+            <td><div align="left" class="style3">Shipper Phone : </div></td>
+
+            <td><div align="left" class="style3">
+
+              <?php echo $phone; ?>
+            </div></td>
+          </tr>
+
+          <tr>
+
+            <td><div align="left" class="style3">Shipper Address : </div></td>
+
+            <td><div align="left" class="style3">
+			<?php echo $s_add; ?>
+			</div></td>
+          </tr>
+        </tbody></table>
+
+      </div></td>
+
+      <td class="Partext1" bgcolor="#FFFFFF">
+	  <div align="center">
+
+        <table border="0" cellpadding="1" cellspacing="1" width="80%">
+
+          <tbody><tr>
+
+            <td width="55%" class="style3"><div align="left">Receiver Name : </div></td>
+
+            <td width="45%" class="style3"><div align="left"><?php echo $rev_name; ?></div></td>
+
+          </tr>
+
+          <tr>
+
+            <td class="style3"><div align="left">Receiver Phone : </div></td>
+
+            <td class="style3"><div align="left">
+			<?php echo $r_phone; ?>
+            </div></td>
+          </tr>
+
+          <tr>
+
+            <td class="style3"><div align="left">Receiver Address : </div></td>
+
+            <td class="style3"><div align="left">
+			<?php echo $r_add; ?>
+            </div></td>
+          </tr>
+        </tbody></table>
+      </div></td>
+
+    </tr>
+
+    <tr>
+
+      <td class="Partext1" bgcolor="#FFFFFF" align="right">&nbsp;</td>
+
+      <td class="Partext1" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#FFFFFF" align="right" width="336">Consignment No  : </td>
+
+      <td class="style3" bgcolor="#FFFFFF" width="394"><font color="#FF0000"><?php echo $cons_no; ?></font>&nbsp;</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#FFFFFF" align="right">Ship Type  :</td>
+
+      <td class="style3" bgcolor="#FFFFFF"><?php echo $type; ?>&nbsp;</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#FFFFFF" align="right">Weight :</td>
+
+      <td class="style3" bgcolor="#FFFFFF"><?php echo $weight; ?>&nbsp;kg</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#F3F3F3" align="right">Invoice no  :</td>
+
+      <td class="style3" bgcolor="#FFFFFF"><?php echo $invice_no; ?>&nbsp;</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#F3F3F3" align="right">Booking Mode :</td>
+
+      <td class="style3" bgcolor="#FFFFFF"><?php echo $book_mode; ?>&nbsp;</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#F3F3F3" align="right">Total freight : </td>
+
+      <td class="style3" bgcolor="#FFFFFF"><?php echo $freight; ?>&nbsp;Rs.</td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#F3F3F3" align="right">Mode : </td>
+
+      <td class="style3" bgcolor="#FFFFFF"><?php echo $mode; ?></td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#FFFFFF" align="right">Pickup Date/Time  :</td>
+
+      <td class="style3" bgcolor="#FFFFFF">
+
+        <?php echo $pick_date; ?> -<span class="gentxt">
+<?php echo $pick_time; ?>
+        </span> </td>
+    </tr>
+
+    <tr>
+
+      <td class="style3" bgcolor="#FFFFFF" align="right">Status :</td>
+
+      <td class="style3" bgcolor="#FFFFFF">&nbsp;<?php echo $status; ?></td>
+    </tr>
+
+
+
+    <tr>
+
+      <td class="style3" bgcolor="#FFFFFF" align="right" valign="top">Comments :</td>
+
+      <td class="style3" bgcolor="#FFFFFF">&nbsp;<?php echo $comments; ?></td>
+    </tr>
+  </tbody></table>
+
+  <p>&nbsp;</p></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304">&nbsp;</td>
+  </tr>
+</tbody></table>
+</td>
+
+  </tr>
+
+</tbody></table>
+
+
+
+
+
+</body></html>
+<?php }//while
+}//if
+else {
+echo 'In else....';
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Admin</title>
+<link href="css/mystyle.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.style1 {color: #FF0000}
+.style3 {font-family: verdana, tohama, arial}
+</style>
+</head>
+
+<body>
+
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+
+  <tbody><tr>
+
+    <td width="900">
+<?php include("header.php"); ?>
+
+	</td>
+
+  </tr>
+
+
+
+  <tr>
+
+    <td bgcolor="#FFFFFF">
+
+<style type="text/css">
+.ds_box {
+	background-color: #FFF;
+	border: 1px solid #000;
+	position: absolute;
+	z-index: 32767;
+}
+.ds_tbl {
+	background-color: #FFF;
+}
+.ds_head {
+	background-color: #333;
+
+	color: #FFF;
+
+	font-family: Arial, Helvetica, sans-serif;
+
+	font-size: 13px;
+
+	font-weight: bold;
+
+	text-align: center;
+
+	letter-spacing: 2px;
+
+}
+.ds_subhead {
+	background-color: #CCC;
+	color: #000;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 32px;
+}
+.ds_cell {
+	background-color: #EEE;
+	color: #000;
+	font-size: 13px;
+
+	text-align: center;
+
+	font-family: Arial, Helvetica, sans-serif;
+
+	padding: 5px;
+
+	cursor: pointer;
+
+}
+.ds_cell:hover {
+	background-color: #F3F3F3;
+} /* This hover code won't work for IE */
+</style>
+<style type="text/css">
+
+<!--
+
+body {
+
+	margin-left: 0px;
+
+	margin-top: 0px;
+
+	margin-right: 0px;
+
+	margin-bottom: 0px;
+
+}
+
+-->
+
+</style>
+
+
+
+
+
+<table class="ds_box" id="ds_conclass" style="display: none;" cellpadding="0" cellspacing="0">
+
+  <tbody><tr>
+
+    <td id="ds_calclass"> </td>
+
+  </tr>
+
+</tbody></table>
+
+
+
+  <br>
+
+
+
+
+  <br>
+
+  <table bgcolor="#EEEEEE" cellpadding="2" cellspacing="2" align="center" width="75%">
+
+
+
+    <tbody><tr>
+
+      <td class="Partext1" bgcolor="#FFFFFF" align="right"><div align="center">
+
+  <span class="Partext1"><br>
+
+
+   </span>
+
+  <table bgcolor="#EEEEEE" cellpadding="2" cellspacing="2" align="center" width="75%">
+
+     <tbody><tr>
+<h3 style="font-family:Verdana; font-size:12px;">Consignment Number <font color="#FF0000"><?php echo $cons; ?></font> not found. Please verify the Number.<br/>
+<a href="search-edit.php">Go Back</a> to Search Again.</h3>
+       </tr>
+
+        </tbody></table>
+
+
+</td>
+
+  </tr>
+
+  <tr>
+
+    <td><table border="0" cellpadding="0" cellspacing="0" align="center" width="900">
+  <tbody><tr>
+    <td bgcolor="#2284d5" height="40" width="476">&nbsp;</td>
+    <td bgcolor="#2284d5" width="304"><div align="right"></div></td>
+  </tr>
+</tbody></table>
+</td>
+
+  </tr>
+
+</tbody></table>
+
+
+
+
+
+</body></html>
